@@ -23,7 +23,7 @@ const Nav = styled.nav`
     cursor: pointer;
     transition: all 0.1s ease-in-out;
 
-    &:hover {
+    :hover {
       transform: scale(1.1);
     }
   }
