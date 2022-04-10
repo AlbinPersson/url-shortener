@@ -1,3 +1,7 @@
 export interface Url {
-  originalUrl: String;
+  _id: string;
+  originalUrl: string;
+}
+export interface CreateUrl {
+  originalUrl: string;
 }
