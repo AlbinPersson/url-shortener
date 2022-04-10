@@ -1,1 +1,1 @@
-export type { Url } from "types/Url";
+export type { Url, CreateUrl } from "types/Url";
