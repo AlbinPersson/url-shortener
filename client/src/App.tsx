@@ -1,5 +1,7 @@
+import UrlForm from "components/UrlForm";
+
 function App() {
-  return <div>Funkar</div>;
+  return <UrlForm />;
 }
 
 export default App;
