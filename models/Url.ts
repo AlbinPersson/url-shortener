@@ -13,7 +13,12 @@ export const Url = mongoose.model(
 
 export function validate(url: IUrl) {
   const schema = Joi.object({
-    originalUrl: Joi.string().max(1000).required(),
+    originalUrl: Joi.string()
+      .uri({
+        scheme: ["http", "https"],
+      })
+      .max(1000)
+      .required(),
     validTime: Joi.number().min(1).max(1000),
   });
 
