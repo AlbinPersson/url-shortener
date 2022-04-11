@@ -1,13 +1,19 @@
 import { useEffect } from "react";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { getUrl } from "services/urlService";
 
 function Redirect() {
   const { id } = useParams<{ id: string }>();
+  const history = useHistory();
 
   async function redirectToUrl() {
-    const { data } = await getUrl(id);
-    window.location.href = data.originalUrl;
+    try {
+      const { data } = await getUrl(id);
+      window.location.href = data.originalUrl;
+    } catch (error) {
+      history.push("/urls");
+      alert("The link has expired");
+    }
   }
 
   useEffect(() => {
