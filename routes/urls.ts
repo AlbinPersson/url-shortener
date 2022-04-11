@@ -17,15 +17,10 @@ router.get("/:id", async (req: Request, res: Response) => {
   if (!url)
     return res.status(404).send(`url with id: ${req.params.id} was not found`);
 
-  //if url has validtime calculate when it ends, and delete if so
-  if (url.validTime) {
-    const validTime = new Date(
-      url.createdTime.getTime() + url.validTime * 60000
-    );
-    if (validTime < new Date()) {
-      await Url.findByIdAndDelete(req.params.id);
-      return res.status(400).send("url has expired");
-    }
+  if (url.validTime && url.validTime < new Date()) {
+    await Url.findByIdAndDelete(req.params.id);
+
+    return res.status(400).send("url has expired");
   }
 
   return res.send(url);
@@ -35,10 +30,14 @@ router.post("/", async (req: Request, res: Response) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.message);
 
+  let validTime;
+  if (req.body.validTime) {
+    validTime = new Date().getTime() + req.body.validTime * 60000;
+  }
+
   let url = new Url({
     originalUrl: req.body.originalUrl,
-    validTime: req.body.validTime,
-    createdTime: new Date(),
+    validTime: validTime ? validTime : null,
   });
 
   url = await url.save();
