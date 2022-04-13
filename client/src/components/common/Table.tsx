@@ -30,22 +30,20 @@ export default TableBody;
 
 const Container = styled.div`
   height: 90vh;
-  padding-top: 5vh;
 `;
 
 const Row = styled.div`
   height: 10vh;
   display: grid;
-  grid-template-columns: 6fr 1fr 1fr 1fr;
+  grid-template-columns: 5fr 1fr 1fr 1fr;
   column-gap: 3vw;
   align-content: center;
   border-bottom: solid 1px #7c9082;
-  padding-left: 5vw;
-  padding-right: 3vw;
+  padding-left: 10vw;
+  padding-right: 10vw;
 `;
 
 const Content = styled.span`
-  height: 10vh;
   display: flex;
   align-items: center;
 `;

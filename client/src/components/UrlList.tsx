@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { getUrls } from "services/urlService";
+import { deleteUrl, getUrls } from "services/urlService";
 import { Column, Url } from "types";
 import TableBody from "components/common/Table";
-import RenewButton from "./RenewButton";
+import RenewForm from "./RenewForm";
+import styled from "styled-components";
+import TableHeader from "./common/TableHeader";
 
 function UrlList() {
   const [urls, setUrls] = useState<Url[]>([]);
@@ -12,6 +14,12 @@ function UrlList() {
     setUrls(urls);
   }
 
+  const handleDelete = async (id: string) => {
+    const filterdUrls = urls?.filter((url) => url._id !== id);
+    setUrls(filterdUrls);
+    await deleteUrl(id);
+  };
+
   useEffect(() => {
     fetchUrls();
   }, []);
@@ -20,16 +28,11 @@ function UrlList() {
     {
       name: "originalUrl",
       content: (url: Url) => {
-        return <span> {url.originalUrl}</span>;
-      },
-    },
-    {
-      name: "validTime",
-      content: (url: Url) => {
-        return url.validTime ? (
-          <span>{new Date(url.validTime).toLocaleTimeString("sv-SV")}</span>
-        ) : (
-          <span>Unset</span>
+        return (
+          <Urls>
+            <span> {url.originalUrl.slice(0, 60)}...</span>
+            <span> {`http://localhost:3000/${url.shortUrl}`}</span>
+          </Urls>
         );
       },
     },
@@ -37,21 +40,56 @@ function UrlList() {
       name: "validTime",
       content: (url: Url) => {
         return url.validTime ? (
-          <span>{new Date(url.validTime).toLocaleTimeString("sv-SV")}</span>
+          <ValidTime>
+            <span>{new Date(url.validTime).toLocaleDateString("sv-SV")}</span>
+            <span>{new Date(url.validTime).toLocaleTimeString("sv-SV")}</span>
+          </ValidTime>
         ) : (
           <span>Unset</span>
         );
       },
     },
     {
-      name: "validTime",
+      name: "updateValidTime",
       content: (url: Url) => {
-        return <RenewButton />;
+        return <RenewForm url={url} handleUpdate={fetchUrls} />;
+      },
+    },
+    {
+      name: "deleteUrl",
+      content: (url: Url) => {
+        return <Delete onClick={() => handleDelete(url._id)}>Delete</Delete>;
       },
     },
   ];
 
-  return <TableBody data={urls} columns={columns} />;
+  return (
+    <>
+      <TableHeader />
+      <TableBody data={urls} columns={columns} />;
+    </>
+  );
 }
 
 export default UrlList;
+
+const ValidTime = styled.span`
+  display: grid;
+`;
+const Urls = styled.span`
+  display: grid;
+`;
+
+const Delete = styled.button`
+  height: 5vh;
+  width: 5vw;
+  background-color: transparent;
+  border: solid 1px #edeec0;
+  border-radius: 1vh;
+  transition: all 0.1s ease-in-out;
+
+  :hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+`;
