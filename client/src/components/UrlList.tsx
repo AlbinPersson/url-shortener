@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 import { deleteUrl, getUrls } from "services/urlService";
 import { Column, Url } from "types";
 import TableBody from "components/common/Table";
-import RenewForm from "./RenewForm";
-import styled from "styled-components";
-import TableHeader from "./common/TableHeader";
+import RenewForm from "components/RenewForm";
+import TableHeader from "components/common/TableHeader";
 
 function UrlList() {
   const [urls, setUrls] = useState<Url[]>([]);

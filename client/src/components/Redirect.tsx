@@ -12,7 +12,7 @@ function Redirect() {
       window.location.href = data.originalUrl;
     } catch (error) {
       history.push("/urls");
-      alert("The link has expired");
+      alert("The link has expired or does not exist");
     }
   }
 

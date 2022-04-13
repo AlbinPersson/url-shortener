@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import { addUrl } from "services/urlService";
 import styled from "styled-components";
+import { addUrl } from "services/urlService";
 
 interface FormData {
   originalUrl: string;
@@ -17,6 +17,7 @@ function UrlForm() {
 
   const onSubmit = handleSubmit(async (data) => {
     if (!data.validTime) delete data.validTime;
+
     await addUrl(data);
     setValue("originalUrl", "");
     alert("submited");

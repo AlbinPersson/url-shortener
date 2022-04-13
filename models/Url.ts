@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Joi, { string } from "joi";
+import Joi from "joi";
 import { Url as IUrl } from "types";
 
 export const Url = mongoose.model(

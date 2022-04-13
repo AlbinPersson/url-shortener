@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import { updateUrl } from "services/urlService";
 import styled from "styled-components";
+import { updateUrl } from "services/urlService";
 import { Url } from "types";
 
 interface FormData {
