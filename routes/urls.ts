@@ -52,7 +52,8 @@ router.put("/:id", async (req, res) => {
   const url = await Url.findById(req.params.id);
   if (!url) return res.status(404).send("Not Found");
 
-  url.validTime = url.validTime.getTime() + req.body.validTime * 60000;
+  const validTime = url.validTime ? url.validTime : new Date();
+  url.validTime = validTime.getTime() + req.body.validTime * 60000;
 
   await url.save();
 
