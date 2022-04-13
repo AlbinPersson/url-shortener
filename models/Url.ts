@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Joi from "joi";
+import Joi, { string } from "joi";
 import { Url as IUrl } from "types";
 
 export const Url = mongoose.model(
@@ -7,6 +7,7 @@ export const Url = mongoose.model(
   new mongoose.Schema({
     originalUrl: { type: String, maxlength: 1000, required: true },
     validTime: { type: Date },
+    shortUrl: { type: String, required: true },
   })
 );
 

@@ -10,10 +10,7 @@ router.get("/", async (req: Request, res: Response) => {
 });
 
 router.get("/:id", async (req: Request, res: Response) => {
-  if (!mongoose.Types.ObjectId.isValid(req.params.id))
-    return res.status(400).send("Invalid Id");
-
-  const url = await Url.findById(req.params.id);
+  const url = await Url.findOne({ shortUrl: req.params.id });
   if (!url)
     return res.status(404).send(`url with id: ${req.params.id} was not found`);
 
@@ -38,6 +35,8 @@ router.post("/", async (req: Request, res: Response) => {
     validTime: validTime ? validTime : null,
   });
 
+  url.shortUrl = url._id.toString().slice(18, 24);
+
   url = await url.save();
 
   return res.status(201).send(url);
@@ -53,7 +52,7 @@ router.put("/:id", async (req, res) => {
   const url = await Url.findById(req.params.id);
   if (!url) return res.status(404).send("Not Found");
 
-  url.validTime = new Date().getTime() + req.body.validTime * 60000;
+  url.validTime = url.validTime.getTime() + req.body.validTime * 60000;
 
   await url.save();
 
