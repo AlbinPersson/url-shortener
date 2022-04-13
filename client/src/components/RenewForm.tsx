@@ -25,7 +25,6 @@ function RenewForm({ url, handleUpdate }: Props) {
 
   return (
     <form onSubmit={onSubmit}>
-      {/* <label htmlFor="validTime">Add valid time (minutes)</label> */}
       <Box>
         <Input
           {...register("validTime", { min: 1, max: 1000, required: true })}
