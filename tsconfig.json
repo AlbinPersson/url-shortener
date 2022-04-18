@@ -29,7 +29,8 @@
     "moduleResolution": "node" /* Specify how TypeScript looks up a file from a given module specifier. */,
     "baseUrl": "." /* Specify the base directory to resolve non-relative module names. */,
     "paths": {
-      "types": ["client/src/types"]
+      "types": ["client/src/types"],
+      "types/*": ["client/src/types/*"]
     } /* Specify a set of entries that re-map imports to additional lookup locations. */,
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like `./node_modules/@types`. */
@@ -67,6 +68,7 @@
     // "preserveConstEnums": true,                       /* Disable erasing `const enum` declarations in generated code. */
     // "declarationDir": "./",                           /* Specify the output directory for generated declaration files. */
     // "preserveValueImports": true,                     /* Preserve unused imported values in the JavaScript output that would otherwise be removed. */
+    // "preserveValueImports": true,                     /* Preserve unused imported values in the JavaScript output that would otherwise be removed. */
 
     /* Interop Constraints */
     // "isolatedModules": true,                          /* Ensure that each file can be safely transpiled without relying on other imports. */
@@ -102,5 +104,6 @@
   },
   "ts-node": {
     "require": ["tsconfig-paths/register"]
-  }
+  },
+  "exclude": ["client"]
 }
