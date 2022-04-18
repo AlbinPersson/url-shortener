@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import Joi from "joi";
-import { Url as IUrl } from "types";
+import { CreateUrl as IUrl } from "types";
 
 export const Url = mongoose.model(
   "Url",
@@ -24,6 +24,7 @@ export function validate(url: IUrl) {
 
   return schema.validate(url);
 }
+
 export function validateUpdate(url: IUrl) {
   const schema = Joi.object({
     validTime: Joi.number().min(1).max(1000).required(),

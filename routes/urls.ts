@@ -4,6 +4,9 @@ import { Url, validate, validateUpdate } from "models/Url";
 
 const router = express.Router();
 
+// 60000 milliseconds 1 minute
+const TIME = 60000;
+
 router.get("/", async (req: Request, res: Response) => {
   const urls = await Url.find();
   return res.send(urls);
@@ -14,6 +17,7 @@ router.get("/:id", async (req: Request, res: Response) => {
   if (!url)
     return res.status(404).send(`url with id: ${req.params.id} was not found`);
 
+  //Check if URl is still valid
   if (url.validTime && url.validTime < new Date()) {
     return res.status(400).send("url has expired");
   }
@@ -27,7 +31,7 @@ router.post("/", async (req: Request, res: Response) => {
 
   let validTime;
   if (req.body.validTime) {
-    validTime = new Date().getTime() + req.body.validTime * 60000;
+    validTime = new Date().getTime() + req.body.validTime * TIME;
   }
 
   let url = new Url({
@@ -35,6 +39,7 @@ router.post("/", async (req: Request, res: Response) => {
     validTime: validTime ? validTime : null,
   });
 
+  //creates shorturl from last 6 character from objectId (last 6 uniqe per machine)
   url.shortUrl = url._id.toString().slice(18, 24);
 
   url = await url.save();
@@ -52,8 +57,9 @@ router.put("/:id", async (req, res) => {
   const url = await Url.findById(req.params.id);
   if (!url) return res.status(404).send("Not Found");
 
+  // updates validTime or creates new
   const validTime = url.validTime ? url.validTime : new Date();
-  url.validTime = validTime.getTime() + req.body.validTime * 60000;
+  url.validTime = validTime.getTime() + req.body.validTime * TIME;
 
   await url.save();
 
