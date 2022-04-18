@@ -4,10 +4,14 @@ import { deleteUrl, getUrls } from "services/urlService";
 import { Column, Url } from "types";
 import TableBody from "components/common/Table";
 import RenewForm from "components/RenewForm";
-import TableHeader from "components/common/TableHeader";
+import TableHeader from "components/TableHeader";
 
 function UrlList() {
   const [urls, setUrls] = useState<Url[]>([]);
+
+  useEffect(() => {
+    fetchUrls();
+  }, []);
 
   async function fetchUrls() {
     const { data: urls } = await getUrls();
@@ -20,19 +24,15 @@ function UrlList() {
     await deleteUrl(id);
   };
 
-  useEffect(() => {
-    fetchUrls();
-  }, []);
-
   const columns: Column[] = [
     {
       name: "originalUrl",
       content: (url: Url) => {
         return (
-          <Urls>
+          <span>
             <span> {url.originalUrl.slice(0, 60)}...</span>
             <span> {`http://localhost:3000/${url.shortUrl}`}</span>
-          </Urls>
+          </span>
         );
       },
     },
@@ -74,9 +74,6 @@ function UrlList() {
 export default UrlList;
 
 const ValidTime = styled.span`
-  display: grid;
-`;
-const Urls = styled.span`
   display: grid;
 `;
 
