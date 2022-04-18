@@ -14,3 +14,11 @@ export function getUrl(id: string) {
 export function addUrl(item: CreateUrl) {
   return axios.post(apiEndpoint, item);
 }
+
+export function updateUrl(item: { validTime: number }, id: string) {
+  return axios.put(`${apiEndpoint}/${id}`, item);
+}
+
+export function deleteUrl(id: string) {
+  return axios.delete(`${apiEndpoint}/${id}`);
+}

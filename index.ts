@@ -1,16 +1,17 @@
 import express from "express";
+import "express-async-errors";
+import mongoose from "mongoose";
 import cors from "cors";
 import urls from "routes/urls";
-import mongoose from "mongoose";
+import error from "middleware/error";
 
 const app = express();
 
-//Middlewares
 app.use(cors());
 app.use(express.json());
 
-// Routes
 app.use("/api/urls", urls);
+app.use(error);
 
 mongoose
   .connect("mongodb://localhost/url-shortener")

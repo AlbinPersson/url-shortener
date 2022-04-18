@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import { addUrl } from "services/urlService";
 import styled from "styled-components";
+import { addUrl } from "services/urlService";
 
 interface FormData {
   originalUrl: string;
-  validTime: number;
+  validTime?: number;
 }
 
 function UrlForm() {
@@ -16,6 +16,8 @@ function UrlForm() {
   } = useForm<FormData>();
 
   const onSubmit = handleSubmit(async (data) => {
+    if (!data.validTime) delete data.validTime;
+
     await addUrl(data);
     setValue("originalUrl", "");
     alert("submited");
@@ -25,10 +27,11 @@ function UrlForm() {
     <Container>
       <FormBox onSubmit={onSubmit}>
         <Input
-          {...register("originalUrl", { required: true })}
+          {...register("originalUrl", { required: true, max: 1000 })}
           placeholder="Enter your Url"
+          type="url"
         />
-        {errors.originalUrl && <h3>Url is required </h3>}
+        {errors.originalUrl && <h3>Url is required (max 1000 characters) </h3>}
 
         <Label htmlFor="validTime">Valid time in minutes (optional)</Label>
         <InputNumber

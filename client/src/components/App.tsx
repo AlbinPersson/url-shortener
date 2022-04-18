@@ -1,8 +1,8 @@
 import { Route, Switch } from "react-router-dom";
 import UrlForm from "components/UrlForm";
 import Redirect from "components/Redirect";
-import Navbar from "./Navbar";
-import UrlList from "./UrlList";
+import Navbar from "components/Navbar";
+import UrlList from "components/UrlList";
 
 function App() {
   return (
