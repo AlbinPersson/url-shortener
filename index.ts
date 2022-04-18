@@ -1,8 +1,8 @@
 import express from "express";
+import "express-async-errors";
+import mongoose from "mongoose";
 import cors from "cors";
 import urls from "routes/urls";
-import mongoose from "mongoose";
-import "express-async-errors";
 import error from "middleware/error";
 
 const app = express();
